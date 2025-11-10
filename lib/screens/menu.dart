@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kicks_archive/widgets/product_card.dart';
+import 'package:kicks_archive/widgets/left_drawer.dart';
 
 class ItemHomepage {
   final String name;
@@ -31,6 +33,7 @@ class MyHomePage extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
+      drawer: LeftDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -113,55 +116,4 @@ class InfoCard extends StatelessWidget {
   }
 }
 
-class ItemCard extends StatelessWidget {
-  final ItemHomepage item;
 
-  const ItemCard(this.item, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Check if there is color for ItemCard, else use the secondary colorScheme
-    final Color itemCardColor;
-    if (item.color != null) {
-      itemCardColor = item.color!; //! for not null assertion
-    }
-    else{
-      itemCardColor = Theme.of(context).colorScheme.secondary;
-    }
-    return Material(
-      // Background theme for the application
-      color: itemCardColor,
-      // Rounded edges for card
-      borderRadius: BorderRadius.circular(12),
-
-      child: InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text("You just pressed the ${item.name} button!"),
-              ),
-            );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(item.icon, color: Colors.white, size: 30.0),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
