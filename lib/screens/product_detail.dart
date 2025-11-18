@@ -17,8 +17,8 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News Detail'),
-        backgroundColor: Colors.indigo,
+        title: const Text('Product Detail'),
+        backgroundColor: const Color.fromARGB(255, 238, 174, 25),
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -82,7 +82,7 @@ class ProductDetailPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 4.0),
                         decoration: BoxDecoration(
-                          color: Colors.indigo.shade100,
+                          color: const Color.fromARGB(255, 255, 225, 103),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                         child: Text(
@@ -90,7 +90,7 @@ class ProductDetailPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.indigo.shade700,
+                            color: const Color.fromARGB(255, 238, 174, 25),
                           ),
                         ),
                       ),

@@ -53,7 +53,7 @@ class _ProductEntryListPageState extends State<ProductEntryListPage> {
                 children: [
                   Text(
                     'There are no products yet.',
-                    style: TextStyle(fontSize: 20, color: Color(0xff59A5D8)),
+                    style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 228, 188, 26)),
                   ),
                   SizedBox(height: 8),
                 ],

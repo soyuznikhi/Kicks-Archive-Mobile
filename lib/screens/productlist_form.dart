@@ -37,7 +37,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Add Product Form')),
-        backgroundColor: Colors.indigo,
+        backgroundColor: const Color.fromARGB(255, 238, 174, 25),
         foregroundColor: Colors.white,
       ),
 
@@ -241,7 +241,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                      backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 238, 174, 25)),
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -265,7 +265,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           if (response['status'] == 'success') {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
-                              content: Text("News successfully saved!"),
+                              content: Text("Product successfully saved!"),
                             ));
                             Navigator.pushReplacement(
                               context,
