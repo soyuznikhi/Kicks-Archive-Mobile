@@ -16,7 +16,7 @@ class MyHomePage extends StatelessWidget {
   final List<ItemHomepage> items = [
     ItemHomepage("All Products", Icons.radio_button_off, Colors.blue),
     ItemHomepage("Add Product", Icons.add, Colors.red),
-    ItemHomepage("My Products", Icons.radio_button_on, Colors.green),
+    ItemHomepage("Logout", Icons.logout, Colors.green),
   ];
 
   final String name = "Samuel Marcelino Tindaon";

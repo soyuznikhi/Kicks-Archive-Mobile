@@ -1,5 +1,55 @@
 # **KICKS ARCHIVE**
 
+## Tugas 9
+1. Mengapa kita perlu membuat model Dart saat mengambil/mengirim data JSON? Apa konsekuensinya jika langsung memetakan Map<String, dynamic> tanpa model (terkait validasi tipe, null-safety, maintainability)?
+    - Dengan membuat model Dart, kita dapat membungkus data JSON dalam suatu class custom. Contohnya pada class ProductEntry di project ini. Hal ini berfungsi untuk membuat data JSON memiliki bentuk yang mirip saat pada project Django sehingga kita dapat mengaksesnya sebagai sebuah object ProductEntry dan mengakses fieldnya, seperti name, price, description, dll tanpa harus mengakses Map secara manual. Apabila ada perubahan dalam model Django, kita bisa menyesuaikan model Dart ini juga dengan mudah.
+    - Jika menggunakan Map secara langsung, kita tidak bisa menjamin tipe data yang dipegang oleh key pada Map tersebut. Dengan menggunakan sebuah model custom, kita dapat memvalidasi tipe data yang didapatkan dari Map, yaitu melalui variabel class yang sudah di assign dengan tipe data yang sesuai. 
+    - Data null dapat dihandle melalui class yang membungkusnya, misalnya dengan memberikan default value. Hal ini mencegah null check lagi pada widget-widget lainnya.
+  
+2. Fungsi package http dan CookieRequest dalam tugas ini? Jelaskan perbedaan peran http vs CookieRequest.
+   - Http berperan untuk mengirim GET/POST dan menerima response.
+   - CokkieRequest berperan sebagai wrapper untuk mengelola cookie, session, dan login/logout Django agar bisa diintegrasi dengan Provider dalam proses authentication. 
+3. Mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter?
+   - Cookies dan session dibagikan ke semua komponen agar semua komponen memiliki cookie dan session yang sama. Hal ini mencegah adanya komponen yang memiliki cookie dan session yang berbeda dengan lainnya. Kita ingin user memiliki state yang sama pada semua komponen flutter. Aplikasi harus mengenal user beserta state-nya dalam semua komponen/fitur aplikasi, misalnya mengingat preferensi user dan apakah user sudah login atau belum.
+4. Jelaskan konfigurasi konektivitas yang diperlukan agar Flutter dapat berkomunikasi dengan Django. Mengapa kita perlu menambahkan 10.0.2.2 pada ALLOWED_HOSTS, mengaktifkan CORS dan pengaturan SameSite/cookie, dan menambahkan izin akses internet di Android? Apa yang akan terjadi jika konfigurasi tersebut tidak dilakukan dengan benar?
+   - Menambahkan 10.0.2.2 pada ALLOWED_HOSTS diperlukan agar Android Studio emulator diizinkan melakukan koneksi kepada project Django.
+   - CORS diaktifkan untuk menjalankan Cross-Origin Resource Sharing agar Flutter dapat mengakses data dari project Django. Cookie dan session juga dapat diperoleh melalui CORS sehingga Flutter dapan menyimpan cookie dan session yang sudah ada. Agar bisa menerima/megirim request dari flutter, pengaturan SameSite harus diatur agar bisa menerima cookie dari cross-origin. 
+   - Menambahkan akses internet di Android agar Android bisa mengirim dan menerima request melalui jaringan internet.
+   - Jika hal ini tidak dikonfigurasi dengan benar, maka bisa saja CORS tidak berjalan dengan baik, Django menolak request dari Flutter, dan Cookie & session tidak akan sesuai pada Django dan flutter.
+5. Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+   - User mengisi form pada dan Flutter melakukan postJson untuk input yang dimasukkan oleh user.
+   - Django menerima postJson yang dikirim oleh flutter dan menggunakan function views yang sesuai. Data pun disimpan dalam database.
+   - Function views pada Django pun akan mengirim balik JsonResponse yang akan diterima oleh Flutter. 
+   - Flutter menerima JsonResponse dan memasukkannya pada custom class (model yang dibuat pada project ini), lalu menampilkannnya kepada user.  
+6.  Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+   - User mengisi form Registrasi dan Flutter melakukan postJson registrasi untuk input yang dimasukkan oleh user.
+   - Django menerima postJson dan melakukan registrasi User pada views di aplikasi Authentication, lalu mengembalikan JsonResponse ke Flutter.
+   - Flutter menerima JsonResponse dan mengarahkan user ke halaman login (jika berhasil).
+   - User mengisi form login dan Flutter mengirim request login untuk input yang dimasukkan oleh user.
+   - Django menerima request login dan melakukan user authentication melalui views, lalu mengembalikan JsonResponse ke Flutter.
+   - Flutter menerima JsonResponse dan user berhasil/gagal login. 
+   - Untuk logout, flutter mengirim request logout.
+   - Django menerima logout request dari flutter dan menjalankan proses logout melalui views, lalu mengembalikan JsonResponse.
+   - Flutter menerima JsonResponse dan User berhasil/gagal logout.
+7. Implementasi Checklist:
+   - Menerapkan CORS pada project Django dan melakukan konfigurasi pada settings.py project agar flutter diizinkan melakukan koneksi ke project Django. 
+   - Membuat aplikasi Authentication pada project Django yang memiliki views untuk meng-handle proses authentication (login, logout, register) untuk Flutter. 
+   - Melakukan integrasi sistem autentikasi pada flutter, yaitu dengan menggunakan package authentication dari PBP. Agar dapat digunakan, maka harus menyediakan CookieRequest ke semua komponen flutter dengan Provider. Provider disini berguna untuk membagikan instance CookieRequest ke semua komponen (widget) Flutter. 
+   - Membuat halaman login yang mengirim request login ke Django dan menerima JsonResponse dari Django. Menambahkan text yang bisa ditekan untuk pergi ke halaman register. Lalu membuat main.dart mengarahkan user ke login page terlebih dahulu. Jika sukses login arahkan user ke homepage.
+   -  Membuat halaman register yang mengirim postJson ke Django dan menerima JsonResponse dari Django. Jika suskes registrasi, arahkan user ke login page.
+   -  Membuat model custom untuk menerima data dari project Django dan ditampilkan di Flutter. Menggunakan Quicktype untuk mengubah Map dari JSON menjadi class yang bisa mengambil data dari JSON.
+   -  Terapkan internet permission untuk android pada android/app/src/main/AndroidManifest.xml agar flutter bisa mengakses internet dan melakukan CORS.
+   -  Untuk mengatasi masalah CORS pada image/thumbnail, maka dibuat sebuah function baru pada views aplikasi main Django untuk mengambil image dari sumber eksternal dan me-returnnya dengan HttpResponse berisi imagenya agar bisa ditampilkan pada Flutter. 
+   -  Untuk menampilkan product, dibuat file dart baru yaitu product_entry_card.dart sebagai widget untuk card-card product yang ingin ditampilkan berdasarkan data dari project Django. Product card akan menampilkan data berdasarkan model custom yang sudah dibuat dan akan mnejadi semirip mungkin dengan yang ada pada project Django. 
+   -  Selanjutnya, dibuat file product_entry_list.dart sebagai widget untuk menampung semua product entry yang ada dan menampilkannya. 
+   -  Membuat navigasi pada tombol di product_card.dart untuk pergi ke ProductEntryListPage untuk melihat semua product.
+   -  Untuk product details, dibuat sebuah file product_details.dart sebagai halaman product detail yang menampilkan details dari product tersebut. 
+   -  Mengubah product_entry_list.dart untuk menambahkan navigasi ke halaman product detail saat di-tap/click oleh user pada product cardnya.
+   -  Untuk menerima create product dari flutter, maka harus dibuat function baru pada views aplikasi main Django untuk menerima input user dari flutter. Maka, ditambahkan function create_news_flutter untuk men-sanitize input user dan membuatnya sebagai instance product baru agar disimpan dalam databse project Django. 
+   -  Lalu dalam productlist_form.dart dihubungkan dengan CookieRequest dengan final request = context.watch<CookieRequest>(); dan melakukan pengirim postJson ketika data input user sudah dimasukkan agar bisa diterima oleh views di project Django. Jika product sukses dibuat, maka lakukan navigasi kembali ke homepage.
+   -  Membuat logout dengan menambahkan tombol logout pada menu.dart dan membuat spesifikasinya pada news_card.dart. Lalu melakukan penghubungan dengan CookieRequest dengan final request = context.watch<CookieRequest>();. Mengubah OnTap() menjadi async dan mengirimkan request logout ke Django. Jika sukses maka user akan logout.
+
+
 ## Tugas 8
 1. Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement() pada Flutter. Dalam kasus apa sebaiknya masing-masing digunakan pada aplikasi Football Shop kamu?
    - .push() menambahkan halaman diatas halaman yang sedang kita gunakan seperti sebuah stack. Dengan sifat stack, kita bisa mengakses halaman sebelumnya dengan menggunakan .pop(). Halaman yang sedang aktif akan di pop dan kembali ke halaman sebelumnya. Contoh kasus yang menggunakan .push() adalaha ketika user sedang melihat details dari sebuah product, dan ingin kembali ke halaman list products.
