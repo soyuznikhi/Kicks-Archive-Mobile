@@ -15,6 +15,7 @@ class MyHomePage extends StatelessWidget {
 
   final List<ItemHomepage> items = [
     ItemHomepage("All Products", Icons.radio_button_off, Colors.blue),
+    ItemHomepage("My Products", Icons.radio_button_off, Colors.blue),
     ItemHomepage("Add Product", Icons.add, Colors.red),
     ItemHomepage("Logout", Icons.logout, Colors.green),
   ];
@@ -72,7 +73,7 @@ class MyHomePage extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 3,
+                    crossAxisCount: 4,
                     // To make grid adjust the height of the content
                     shrinkWrap: true,
 
@@ -102,7 +103,7 @@ class InfoCard extends StatelessWidget {
     return Card(
       elevation: 2.0,
       child: Container(
-        width: MediaQuery.of(context).size.width / 3.5,
+        width: MediaQuery.of(context).size.width / 4.5,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [

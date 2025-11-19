@@ -48,6 +48,7 @@
    -  Untuk menerima create product dari flutter, maka harus dibuat function baru pada views aplikasi main Django untuk menerima input user dari flutter. Maka, ditambahkan function create_news_flutter untuk men-sanitize input user dan membuatnya sebagai instance product baru agar disimpan dalam databse project Django. 
    -  Lalu dalam productlist_form.dart dihubungkan dengan CookieRequest dengan final request = context.watch<CookieRequest>(); dan melakukan pengirim postJson ketika data input user sudah dimasukkan agar bisa diterima oleh views di project Django. Jika product sukses dibuat, maka lakukan navigasi kembali ke homepage.
    -  Membuat logout dengan menambahkan tombol logout pada menu.dart dan membuat spesifikasinya pada news_card.dart. Lalu melakukan penghubungan dengan CookieRequest dengan final request = context.watch<CookieRequest>();. Mengubah OnTap() menjadi async dan mengirimkan request logout ke Django. Jika sukses maka user akan logout.
+   -  Menambahkan button pada menu untuk show my products. Dan menambahkan function baru pada product_entry_list untuk menerima parameter dengan filterMy. Button pada product_card memanggil page product_entry_list dengan parameter filterMy=true. Gunakan filterMy untuk menentukan memanggil function fetchProduct() atau fetchMyProduct(). 
 
 
 ## Tugas 8
